@@ -20,5 +20,13 @@ pipeline {
             }
         }
 
+        stage('Intergration Testing') {
+            steps{
+                script{
+                    integrationTest()
+                }
+            }
+        }
+
     }
 }
