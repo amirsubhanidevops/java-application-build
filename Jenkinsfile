@@ -2,8 +2,13 @@
 pipeline {
     agent any
 
+    paramaters{
+        choice(name: 'actiion', choices: 'create\ndelete', description: "Choose create or delete")
+    }
+
     stages {
         stage('Git Checkout') {
+                when( expression{ param.actiion == 'create' })
             steps {
                 gitCheckout(
                     branch: "main",
@@ -13,17 +18,27 @@ pipeline {
         }
 
         stage('Unit Testing') {
+            when( expression{ param.actiion == 'create' })
             steps{
-                script{
+                script{ 
                     mvnTest()
                 }
             }
         }
-
         stage('Intergration Testing') {
+            when( expression{ param.actiion == 'create' })
             steps{
                 script{
                     integrationTest()
+                }
+            }
+        }
+
+        stage('Static code analysis') {
+            when( expression{ param.actiion == 'create' })
+            steps{
+                script{
+                    staticCodeAnalysis()
                 }
             }
         }
