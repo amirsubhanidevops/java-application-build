@@ -8,7 +8,7 @@ pipeline {
 
     stages {
         stage('Git Checkout') {
-                when( expression{ param.actiion == 'create' })
+            when( expression{ params.actiion == 'create' })
             steps {
                 gitCheckout(
                     branch: "main",
@@ -18,7 +18,7 @@ pipeline {
         }
 
         stage('Unit Testing') {
-            when( expression{ param.actiion == 'create' })
+            when( expression{ params.actiion == 'create' })
             steps{
                 script{ 
                     mvnTest()
@@ -26,7 +26,7 @@ pipeline {
             }
         }
         stage('Intergration Testing') {
-            when( expression{ param.actiion == 'create' })
+            when( expression{ params.actiion == 'create' })
             steps{
                 script{
                     integrationTest()
@@ -35,7 +35,7 @@ pipeline {
         }
 
         stage('Static code analysis') {
-            when( expression{ param.actiion == 'create' })
+            when( expression{ params.actiion == 'create' })
             steps{
                 script{
                     staticCodeAnalysis()
